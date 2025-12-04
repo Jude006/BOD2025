@@ -314,7 +314,7 @@ const Hero = () => {
           </div>
 
           {/* CTA Button */}
-          <button className="px-8 py-3 font-semibold text-white transition-all duration-300 rounded-full shadow-lg bg-primary hover:bg-secondary hover:scale-105 font-body hover:shadow-xl">
+          <button className="hidden px-8 py-3 font-semibold text-white transition-all duration-300 rounded-full shadow-lg lg:flex md:flex bg-primary hover:bg-secondary hover:scale-105 font-body hover:shadow-xl">
             Discover Our Story
           </button>
         </div>
