@@ -125,8 +125,8 @@ const Header = () => {
             {/* Mobile Menu Panel */}
             <div className="md:hidden">
               <div className="absolute left-0 right-0 mx-4 mt-2 overflow-hidden border shadow-2xl top-full bg-white/95 backdrop-blur-lg rounded-xl border-white/20">
-                <div className="px-4 py-6">
-                  <ul className="space-y-4">
+                <div className="px-4 py-4">
+                  <ul className="space-y-1">
                     {navItems.map((item) => (
                       <li key={item.name}>
                         <Link
