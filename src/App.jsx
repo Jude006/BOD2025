@@ -10,7 +10,7 @@ import Footer from './components/common/Footer'
 
 const App = () => {
   return (
-    <div className='font-manrope'>
+    <div className='relative font-manrope'>
       <Header />
       <main>
         <Hero  id='home'/>
