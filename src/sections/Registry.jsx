@@ -13,7 +13,7 @@ const Registry = () => {
   const [copied, setCopied] = React.useState(false);
 
   const handleCopyAccount = () => {
-    navigator.clipboard.writeText("0123456789");
+    navigator.clipboard.writeText("2132920876");
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   };
@@ -29,22 +29,22 @@ const Registry = () => {
 
   const bankAccounts = [
     {
-      name: "David's Account",
-      bank: "Guaranty Trust Bank",
-      accountNumber: "012 3456 789",
+      name: "Babatunde Oduwaye",
+      bank: "UBA",
+      accountNumber: "2132920876",
       icon: <  FaPiggyBank className="text-primary" />
     },
     {
-      name: "Dorcas's Account",
-      bank: "Access Bank",
-      accountNumber: "987 6543 210",
+      name: "Bukola Orimolade ",
+      bank: "First Bank",
+      accountNumber: "3106059451",
       icon: <  FaPiggyBank
  className="text-secondary" />
     },
     {
       name: "Joint Wedding Account",
-      bank: "First Bank",
-      accountNumber: "456 7890 123",
+      bank: "UBA",
+      accountNumber: "2132920876",
       icon: <FaHeart className="text-accent" />
     }
   ];

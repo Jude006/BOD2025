@@ -14,6 +14,7 @@ import { GiLoveLetter, GiAngelWings, GiHearts } from "react-icons/gi";
 import coupleImg1 from "../assets/image/img1.jpg";
 import coupleImg2 from "../assets/image/img2.jpg";
 import coupleImg3 from "../assets/image/img3.jpg";
+import coupleImg4 from "../assets/image/web3.jpg";
 
 const Story = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,46 +24,45 @@ const Story = () => {
 
   const storyTimeline = [
     {
-      year: "2024",
-      title: "Divine Meeting",
-      description:
-        "We met in Abuja when David attended the COZA CGLS program. In that moment of quiet clarity, two parts of one heart finally recognized the beauty God placed within us.",
-      icon: <FaChurch className="text-2xl text-primary" />,
-      image: coupleImg1,
-      verse: "Ecclesiastes 4:9",
-      verseText: "Two are better than one",
-    },
-    {
-      year: "2024",
-      title: "Growing Together",
-      description:
-        "Through growth, healing, and grace, we learned to walk together in love. Each day brought us closer, strengthening our bond through faith and understanding.",
-      icon: <FaPrayingHands className="text-2xl text-secondary" />,
-      image: coupleImg2,
-      verse: "1 Corinthians 13:7",
-      verseText:
-        "Love bears all things, believes all things, hopes all things, endures all things",
-    },
-    {
-      year: "2024",
-      title: "Love Blossoms",
-      description:
-        "As our friendship deepened into love, we discovered a partnership built on mutual respect, shared faith, and God's perfect timing in our lives.",
-      icon: <GiHearts className="text-2xl text-accent" />,
-      image: coupleImg3,
-      verse: "Song of Solomon 8:7",
-      verseText: "Many waters cannot quench love",
-    },
-    {
-      year: "2025",
-      title: "Journey to Forever",
-      description:
-        "Now, as we prepare for our wedding, joy overflows because we enter this new season whole, united, and strengthened by God's grace.",
-      icon: <GiAngelWings className="text-2xl text-primary" />,
-      image: coupleImg1,
-      verse: "Jeremiah 29:11",
-      verseText: "Plans to give you hope and a future",
-    },
+    year: "2024",
+    title: "Divine Connection",
+    description:
+      "We first connected through social media, where our shared faith and values created an instant bond. Through conversations and video calls, we discovered a beautiful spiritual connection that felt like we had known each other for years.",
+    icon: <FaPray className="text-2xl text-primary" />,
+    image: coupleImg1,
+    verse: "Proverbs 18:22",
+    verseText: "He who finds a wife finds what is good",
+  },
+  {
+    year: "2024",
+    title: "First Physical Meeting",
+    description:
+      "Our first in-person meeting happened when David attended the COZA CGLS program in Abuja. In that moment of quiet clarity, two parts of one heart finally recognized the beauty God placed within us. It was as if we were meeting an old friend for the first time.",
+    icon: <FaChurch className="text-2xl text-secondary" />,
+    image: coupleImg2,
+    verse: "Ecclesiastes 4:9",
+    verseText: "Two are better than one",
+  },
+  {
+    year: "2024",
+    title: "Growing Together in Faith",
+    description:
+      "Through prayer, worship, and shared devotionals, our spiritual bond deepened. We learned to walk together in love, growing individually while supporting each other's journey with Christ.",
+    icon: <FaPrayingHands className="text-2xl text-accent" />,
+    image: coupleImg3,
+    verse: "1 Corinthians 13:7",
+    verseText: "Love bears all things, believes all things, hopes all things, endures all things",
+  },
+  {
+    year: "2025",
+    title: "Journey to Forever",
+    description:
+      "Now, as we prepare for our wedding, joy overflows because we enter this new season whole, united, and strengthened by God's grace. What began online has blossomed into a beautiful, God-ordained relationship.",
+    icon: <GiAngelWings className="text-2xl text-primary" />,
+    image: coupleImg4,
+    verse: "Jeremiah 29:11",
+    verseText: "Plans to give you hope and a future",
+  },
   ];
 
   // Auto-slide effect

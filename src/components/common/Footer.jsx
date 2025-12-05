@@ -139,7 +139,7 @@ const Footer = () => {
               </a>
               <div className="flex items-center gap-3 text-gray-300 font-playfair">
                 <FaPhone />
-                <span>+234 800 000 0000</span>
+                <span>+234 9168139378</span>
               </div>
             </div>
           </motion.div>

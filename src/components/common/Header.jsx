@@ -31,7 +31,7 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: "#BOD2025", to: "home" },
+    { name: "BOD Affairs'25", to: "home" },
     { name: "Story", to: "story" },
     { name: "Gallery", to: "gallery" },
     { name: "Registry", to: "registry" },
