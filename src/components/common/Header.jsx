@@ -33,7 +33,6 @@ const Header = () => {
   const navItems = [
     { name: "#BOD2025", to: "home" },
     { name: "Story", to: "story" },
-    { name: "Details", to: "details" },
     { name: "Gallery", to: "gallery" },
     { name: "Registry", to: "registry" },
     { name: "RSVP", to: "rsvp" },

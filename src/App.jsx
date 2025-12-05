@@ -15,7 +15,6 @@ const App = () => {
       <main>
         <Hero  id='home'/>
         <Story  id='story'/>
-        <Details  id='details'/>
         <Gallery id='gallery' />
         <Registry id='registry' />
         <RSVP  id='rsvp'/>

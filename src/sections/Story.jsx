@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  FaHeart, 
-  FaMapMarkerAlt, 
-  FaCalendarDay, 
-  FaRing,
-  FaGlassCheers,
-  FaUsers,
+import {
+  FaHeart,
+  FaPray,
+  FaPrayingHands,
+  FaChurch,
+  FaDove,
+  FaBible,
   FaChevronLeft,
-  FaChevronRight
+  FaChevronRight,
 } from "react-icons/fa";
-import { 
-  GiHeartBeats, 
-  GiBigDiamondRing 
-} from "react-icons/gi";
+import { GiLoveLetter, GiAngelWings, GiHearts } from "react-icons/gi";
 import coupleImg1 from "../assets/image/img1.jpg";
 import coupleImg2 from "../assets/image/img2.jpg";
 import coupleImg3 from "../assets/image/img3.jpg";
@@ -22,45 +19,60 @@ import { useSwipeable } from "react-swipeable";
 const Story = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [direction, setDirection] = useState(0); // 1 for next, -1 for prev
 
   const storyTimeline = [
     {
-      year: "2018",
-      title: "The First Meeting",
-      description: "We met at a mutual friend's art exhibition in Lagos. David was showing his photography, and Dorcas was there supporting her best friend. We talked for hours about art, travel, and our shared love for Italian food.",
-      icon: <FaHeart className="text-2xl text-accent" />,
+      year: "2024",
+      title: "Divine Meeting",
+      description:
+        "We met in Abuja when David attended the COZA CGLS program. In that moment of quiet clarity, two parts of one heart finally recognized the beauty God placed within us.",
+      icon: <FaChurch className="text-2xl text-primary" />,
       image: coupleImg1,
+      verse: "Ecclesiastes 4:9",
+      verseText: "Two are better than one",
     },
     {
-      year: "2020",
-      title: "The First Date",
-      description: "Our first official date was at The Sky Restaurant. Despite David's nerves making him spill wine, we laughed through it all. That night, we both knew this was something special.",
-      icon: <GiHeartBeats className="text-2xl text-secondary" />,
+      year: "2024",
+      title: "Growing Together",
+      description:
+        "Through growth, healing, and grace, we learned to walk together in love. Each day brought us closer, strengthening our bond through faith and understanding.",
+      icon: <FaPrayingHands className="text-2xl text-secondary" />,
       image: coupleImg2,
+      verse: "1 Corinthians 13:7",
+      verseText:
+        "Love bears all things, believes all things, hopes all things, endures all things",
     },
     {
-      year: "2022",
-      title: "Moving In Together",
-      description: "We got our first apartment together in Lekki Phase 1. Decorating every corner, cooking our first meals, and building our home together strengthened our bond every day.",
-      icon: <FaMapMarkerAlt className="text-2xl text-primary" />,
+      year: "2024",
+      title: "Love Blossoms",
+      description:
+        "As our friendship deepened into love, we discovered a partnership built on mutual respect, shared faith, and God's perfect timing in our lives.",
+      icon: <GiHearts className="text-2xl text-accent" />,
       image: coupleImg3,
+      verse: "Song of Solomon 8:7",
+      verseText: "Many waters cannot quench love",
     },
     {
-      year: "2023",
-      title: "The Proposal",
-      description: "On a trip to Obudu Mountain Resort, David proposed at sunrise. With misty mountains as our witness, he got down on one knee. Dorcas said 'Yes!' before he could even finish the question.",
-      icon: <GiBigDiamondRing className="text-2xl text-accent" />,
+      year: "2025",
+      title: "Journey to Forever",
+      description:
+        "Now, as we prepare for our wedding, joy overflows because we enter this new season whole, united, and strengthened by God's grace.",
+      icon: <GiAngelWings className="text-2xl text-primary" />,
       image: coupleImg1,
+      verse: "Jeremiah 29:11",
+      verseText: "Plans to give you hope and a future",
     },
   ];
 
   // Auto-slide effect
   useEffect(() => {
     if (!autoPlay) return;
-    
+
     const interval = setInterval(() => {
+      setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % storyTimeline.length);
-    }, 5000); // Change slide every 5 seconds
+    }, 6000); // Change slide every 6 seconds
 
     return () => clearInterval(interval);
   }, [autoPlay, storyTimeline.length]);
@@ -68,61 +80,77 @@ const Story = () => {
   // Swipe handlers
   const handlers = useSwipeable({
     onSwipedLeft: () => {
+      setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % storyTimeline.length);
       setAutoPlay(false);
-      setTimeout(() => setAutoPlay(true), 10000); // Resume auto-play after 10s
+      setTimeout(() => setAutoPlay(true), 15000); // Resume auto-play after 15s
     },
     onSwipedRight: () => {
-      setCurrentSlide((prev) => (prev - 1 + storyTimeline.length) % storyTimeline.length);
+      setDirection(-1);
+      setCurrentSlide(
+        (prev) => (prev - 1 + storyTimeline.length) % storyTimeline.length
+      );
       setAutoPlay(false);
-      setTimeout(() => setAutoPlay(true), 10000);
+      setTimeout(() => setAutoPlay(true), 15000);
     },
-    preventDefaultTouchmoveEvent: true,
+    preventDefaultTouchmoveEvent: false,
     trackMouse: false,
   });
 
   const nextSlide = () => {
+    setDirection(1);
     setCurrentSlide((prev) => (prev + 1) % storyTimeline.length);
     setAutoPlay(false);
-    setTimeout(() => setAutoPlay(true), 10000);
+    setTimeout(() => setAutoPlay(true), 15000);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + storyTimeline.length) % storyTimeline.length);
+    setDirection(-1);
+    setCurrentSlide(
+      (prev) => (prev - 1 + storyTimeline.length) % storyTimeline.length
+    );
     setAutoPlay(false);
-    setTimeout(() => setAutoPlay(true), 10000);
+    setTimeout(() => setAutoPlay(true), 15000);
   };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
-    }
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
   };
 
   const slideVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? 300 : -300,
-      opacity: 0
+      x: direction > 0 ? 100 : -100,
+      opacity: 0,
+      scale: 0.95,
     }),
     center: {
       x: 0,
       opacity: 1,
+      scale: 1,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.4 }
-      }
+        x: { type: "spring", stiffness: 400, damping: 35 },
+        opacity: { duration: 0.5 },
+        scale: { duration: 0.5 },
+      },
     },
     exit: (direction) => ({
-      x: direction > 0 ? -300 : 300,
+      x: direction > 0 ? -100 : 100,
       opacity: 0,
+      scale: 0.95,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.3 }
-      }
-    })
+        x: { type: "spring", stiffness: 400, damping: 35 },
+        opacity: { duration: 0.4 },
+        scale: { duration: 0.4 },
+      },
+    }),
   };
 
   return (
@@ -138,252 +166,320 @@ const Story = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-white rounded-full shadow-sm">
             <FaHeart className="text-primary" />
-            <span className="text-sm text-gray-600 font-playfair">Our Journey</span>
+            <span className="text-sm text-gray-600 font-playfair">
+              God's Perfect Plan
+            </span>
           </div>
           <h2 className="mb-6 text-4xl md:text-5xl font-playfair text-dark">
             Our Love Story
           </h2>
           <p className="max-w-2xl mx-auto text-lg text-gray-600 font-playfair">
-            From strangers to soulmates, every moment has been a chapter in our beautiful story.
+            Two hearts united by faith, walking together in God's perfect
+            timing.
           </p>
         </motion.div>
 
-        {/* Desktop Timeline - Hidden on mobile */}
-        <div className="hidden md:block">
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="relative max-w-6xl mx-auto"
-          >
-            <div className="absolute w-1 h-full transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-primary via-secondary to-accent"></div>
-
-            {storyTimeline.map((item, index) => (
-              <div
-                key={index}
-                className={`relative mb-20 flex items-center ${
-                  index % 2 === 0 ? "flex-row-reverse" : ""
-                }`}
-              >
-                <div className="absolute z-10 w-6 h-6 transform -translate-x-1/2 bg-white border-4 rounded-full shadow-lg left-1/2 border-primary"></div>
-
-                <div className={`w-5/12 ${index % 2 === 0 ? "pr-12" : "pl-12"}`}>
-                  <motion.div
-                    whileHover={{ y: -5 }}
-                    className="p-8 bg-white border border-gray-100 shadow-xl rounded-2xl"
-                  >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-light">
-                      <FaCalendarDay className="text-primary" />
-                      <span className="font-semibold font-playfair text-primary">{item.year}</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="p-3 rounded-full bg-light">
-                        {item.icon}
-                      </div>
-                      <h3 className="text-2xl font-playfair text-dark">{item.title}</h3>
-                    </div>
-
-                    <p className="mb-6 text-gray-600 font-playfair">
-                      {item.description}
-                    </p>
-                  </motion.div>
-                </div>
-
-                <div className={`w-5/12 ${index % 2 === 0 ? "pr-12" : "pl-12"}`}>
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    className="relative overflow-hidden shadow-xl rounded-2xl"
-                  >
-                    <div className="aspect-[4/3] bg-gray-200 rounded-2xl overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
-                  </motion.div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Mobile Carousel */}
-        <div className="md:hidden" {...handlers}>
-          <div className="relative max-w-lg mx-auto">
-            <AnimatePresence mode="wait" custom={currentSlide}>
-              <motion.div
-                key={currentSlide}
-                custom={currentSlide}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="relative"
-              >
-                {/* Story Card */}
-                <div className="overflow-hidden bg-white border border-gray-100 shadow-2xl rounded-3xl">
-                  {/* Image Section */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={storyTimeline[currentSlide].image}
-                      alt={storyTimeline[currentSlide].title}
-                      className="object-cover object-top w-full h-full"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                    
-                    {/* Year Badge on Image */}
-                    <div className="absolute inline-flex items-center gap-2 px-4 py-2 rounded-full top-4 left-4 bg-white/90 backdrop-blur-sm">
-                      {storyTimeline[currentSlide].icon}
-                      <span className="font-semibold font-playfair text-primary">
-                        {storyTimeline[currentSlide].year}
-                      </span>
-                    </div>
-                    
-                    {/* Slide Counter */}
-                    <div className="absolute px-3 py-1 rounded-full top-4 right-4 bg-black/50 backdrop-blur-sm">
-                      <span className="text-sm text-white font-playfair">
-                        {currentSlide + 1} / {storyTimeline.length}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="p-6">
-                    <h3 className="mb-4 text-2xl font-playfair text-dark">
-                      {storyTimeline[currentSlide].title}
-                    </h3>
-                    
-                    <p className="mb-6 text-gray-600 font-playfair">
-                      {storyTimeline[currentSlide].description}
-                    </p>
-
-                    {/* Progress Dots */}
-                    <div className="flex justify-center gap-2 mb-6">
-                      {storyTimeline.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            setCurrentSlide(index);
-                            setAutoPlay(false);
-                            setTimeout(() => setAutoPlay(true), 10000);
-                          }}
-                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            index === currentSlide 
-                              ? "w-8 bg-primary" 
-                              : "bg-gray-300"
-                          }`}
-                          aria-label={`Go to slide ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Navigation Buttons */}
-                    <div className="flex items-center justify-between">
-                      <button
-                        onClick={prevSlide}
-                        className="p-3 transition-colors rounded-full bg-light hover:bg-gray-100"
-                        aria-label="Previous story"
-                      >
-                        <FaChevronLeft className="text-primary" />
-                      </button>
-                      
-                      <div className="flex items-center gap-2 text-sm text-gray-500 font-body">
-                        <FaCalendarDay className="text-primary" />
-                        <span>{storyTimeline[currentSlide].year}</span>
-                      </div>
-                      
-                      <button
-                        onClick={nextSlide}
-                        className="p-3 transition-colors rounded-full bg-light hover:bg-gray-100"
-                        aria-label="Next story"
-                      >
-                        <FaChevronRight className="text-primary" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Auto-play Indicator */}
-            <div className="mt-6 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm">
-                <div className={`w-2 h-2 rounded-full ${autoPlay ? "bg-green-500 animate-pulse" : "bg-gray-300"}`}></div>
-                <span className="text-xs text-gray-600 font-body">
-                  {autoPlay ? "Auto-playing" : "Paused"}
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-gray-500 font-body">
-                Swipe or tap arrows to navigate
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Quote Section */}
+        {/* Main Story Section */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="max-w-4xl mx-auto mt-20"
+          className="max-w-4xl mx-auto mb-20"
         >
-          <div className="relative p-8 overflow-hidden bg-gradient-to-r from-primary/10 to-secondary/10 rounded-3xl md:p-12">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 text-9xl text-primary">"</div>
-              <div className="absolute bottom-0 left-0 text-9xl text-secondary">"</div>
-            </div>
-
-            <div className="relative z-10 text-center">
-              <FaHeart className="mx-auto mb-6 text-4xl text-accent" />
-              <blockquote className="mb-6 text-2xl italic md:text-3xl font-playfair text-dark">
-                "In you, I've found the love of my life and my closest, truest friend."
-              </blockquote>
-              <div className="flex items-center justify-center gap-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary">
-                  <span className="font-bold text-white font-playfair">D&D</span>
+          <div className="p-8 bg-white rounded-3xl shadow-xl border border-gray-100">
+            <div className="flex flex-col items-center gap-8 md:flex-row">
+              <div className="md:w-2/5">
+                <div className="relative overflow-hidden rounded-2xl aspect-square">
+                  <img
+                    src={coupleImg2}
+                    alt="David & Dorcas"
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
-                <div>
-                  <p className="font-semibold font-playfair text-dark">David & Dorcas</p>
-                  <p className="text-sm text-gray-600 font-playfair">December 13, 2025</p>
+              </div>
+
+              <div className="md:w-3/5">
+                <div className="flex items-center gap-3 mb-6">
+                  <FaPray className="text-2xl text-primary" />
+                  <h3 className="text-2xl font-playfair text-dark">
+                    Our Journey of Faith
+                  </h3>
+                </div>
+
+                <div className="space-y-4 text-gray-700 font-playfair">
+                  <p className="text-lg leading-relaxed">
+                    We met ourselves in a moment of quiet clarity, two parts of
+                    one heart finally recognizing the beauty God placed within
+                    us.
+                  </p>
+
+                  <p className="text-lg leading-relaxed">
+                    Through growth, healing, and grace, we learned to walk
+                    together in love. Now, as we prepare for our wedding, joy
+                    overflows because we enter this new season whole, united,
+                    and strengthened.
+                  </p>
+
+                  <div className="p-4 mt-6 italic bg-light rounded-xl">
+                    <div className="flex items-start gap-3">
+                      <FaBible className="text-xl text-primary mt-1" />
+                      <div>
+                        <p className="font-semibold text-dark">
+                          Truly, "Two are better than one"
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Ecclesiastes 4:9
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Milestones Stats */}
+        {/* Journey Timeline Cards */}
+        <div className="mb-20">
+          <h3 className="mb-8 text-3xl font-playfair text-center text-dark">
+            Milestones of Our Journey
+          </h3>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden" {...handlers}>
+            <div className="relative max-w-lg mx-auto">
+              <AnimatePresence mode="sync" custom={direction}>
+                <motion.div
+                  key={currentSlide}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  className="relative"
+                >
+                  {/* Story Card */}
+                  <div className="overflow-hidden bg-white border border-gray-100 shadow-2xl rounded-3xl">
+                    {/* Image Section */}
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={storyTimeline[currentSlide].image}
+                        alt={storyTimeline[currentSlide].title}
+                        className="object-cover object-top w-full h-full"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+
+                      {/* Year Badge on Image */}
+                      <div className="absolute inline-flex items-center gap-2 px-4 py-2 rounded-full top-4 left-4 bg-white/90 backdrop-blur-sm">
+                        {storyTimeline[currentSlide].icon}
+                        <span className="font-semibold font-playfair text-primary">
+                          {storyTimeline[currentSlide].year}
+                        </span>
+                      </div>
+
+                      {/* Slide Counter */}
+                      <div className="absolute px-3 py-1 rounded-full top-4 right-4 bg-black/50 backdrop-blur-sm">
+                        <span className="text-sm text-white font-playfair">
+                          {currentSlide + 1} / {storyTimeline.length}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="p-6">
+                      <h3 className="mb-4 text-2xl font-playfair text-dark">
+                        {storyTimeline[currentSlide].title}
+                      </h3>
+
+                      <p className="mb-4 text-gray-600 font-playfair">
+                        {storyTimeline[currentSlide].description}
+                      </p>
+
+                      {/* Bible Verse */}
+                      <div className="p-4 mb-6 bg-light/50 rounded-xl">
+                        <div className="flex items-start gap-2">
+                          <FaBible className="text-primary mt-1" />
+                          <div>
+                            <p className="text-sm italic text-gray-700">
+                              "{storyTimeline[currentSlide].verseText}"
+                            </p>
+                            <p className="mt-1 text-xs text-gray-500">
+                              {storyTimeline[currentSlide].verse}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Progress Dots */}
+                      <div className="flex justify-center gap-2 mb-6">
+                        {storyTimeline.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              setDirection(index > currentSlide ? 1 : -1);
+                              setCurrentSlide(index);
+                              setAutoPlay(false);
+                              setTimeout(() => setAutoPlay(true), 15000);
+                            }}
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                              index === currentSlide
+                                ? "w-8 bg-primary"
+                                : "w-2 bg-gray-300"
+                            }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Navigation Buttons */}
+                      <div className="flex items-center justify-between">
+                        <button
+                          onClick={prevSlide}
+                          className="p-3 transition-all duration-300 rounded-full bg-light hover:bg-gray-100 hover:scale-110"
+                          aria-label="Previous story"
+                        >
+                          <FaChevronLeft className="text-primary" />
+                        </button>
+
+                        <div className="flex items-center gap-2 text-sm text-gray-500 font-playfair">
+                          <FaHeart className="text-primary" />
+                          <span>Part {currentSlide + 1}</span>
+                        </div>
+
+                        <button
+                          onClick={nextSlide}
+                          className="p-3 transition-all duration-300 rounded-full bg-light hover:bg-gray-100 hover:scale-110"
+                          aria-label="Next story"
+                        >
+                          <FaChevronRight className="text-primary" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Auto-play Indicator */}
+              <div className="mt-6 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm">
+                  <div
+                    className={`w-2 h-2 rounded-full ${
+                      autoPlay ? "bg-green-500 animate-pulse" : "bg-gray-300"
+                    }`}
+                  ></div>
+                  <span className="text-xs text-gray-600 font-playfair">
+                    {autoPlay ? "Auto-sliding" : "Paused"}
+                  </span>
+                </div>
+                <p className="mt-2 text-xs text-gray-500 font-playfair">
+                  Swipe or tap arrows to navigate
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Grid - Hidden on mobile */}
+          <div className="hidden md:grid md:grid-cols-2 gap-8">
+            {storyTimeline.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                  <div className="absolute inline-flex items-center gap-2 px-4 py-2 rounded-full top-4 left-4 bg-white/90 backdrop-blur-sm">
+                    {item.icon}
+                    <span className="font-semibold font-playfair text-primary">
+                      {item.year}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h4 className="mb-3 text-xl font-playfair text-dark">
+                    {item.title}
+                  </h4>
+                  <p className="mb-4 text-gray-600 font-playfair">
+                    {item.description}
+                  </p>
+                  <div className="p-3 bg-light/50 rounded-lg">
+                    <p className="text-sm italic text-gray-700">
+                      "{item.verseText}"
+                    </p>
+                    <p className="mt-1 text-xs text-gray-500">{item.verse}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Final Faith Message */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="grid grid-cols-2 gap-6 mt-20 md:grid-cols-4"
+          className="max-w-4xl mx-auto"
         >
-          {[
-            { icon: <FaCalendarDay />, value: "7 Years", label: "Together" },
-            { icon: <FaMapMarkerAlt />, value: "15+", label: "Trips Taken" },
-            { icon: <FaGlassCheers />, value: "∞", label: "Laughs Shared" },
-            { icon: <FaRing />, value: "1", label: "Forever to Go" },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              className="p-6 text-center bg-white border border-gray-100 shadow-lg rounded-2xl"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-light">
-                <div className="text-2xl text-primary">{stat.icon}</div>
+          <div className="relative p-8 overflow-hidden bg-gradient-to-br from-primary/5 to-secondary/10 rounded-3xl md:p-10">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-0 right-0 text-9xl text-primary">
+                <GiHearts />
               </div>
-              <div className="mb-2 text-3xl font-bold text-dark font-playfair">
-                {stat.value}
+              <div className="absolute bottom-0 left-0 text-9xl text-secondary">
+                <FaDove />
               </div>
-              <div className="text-gray-600 font-playfair">{stat.label}</div>
-            </motion.div>
-          ))}
+            </div>
+
+            <div className="relative z-10 text-center">
+              <div className="inline-flex items-center gap-2 px-6 py-3 mb-6 rounded-full bg-white/80 backdrop-blur-sm">
+                <GiLoveLetter className="text-primary" />
+                <span className="font-playfair text-dark">
+                  Our Prayer & Promise
+                </span>
+              </div>
+
+              <blockquote className="mb-6 text-2xl leading-relaxed md:text-3xl font-playfair italic text-dark">
+                "With God leading us, we step into the future with hope, love,
+                and faith. We trust His promise that 'He has plans to give us
+                hope and a future,' and together, we embrace all He is shaping
+                us to become."
+              </blockquote>
+
+              <div className="flex flex-col items-center justify-center gap-4 mt-8 sm:flex-row">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary">
+                    <FaHeart className="text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold font-playfair text-dark">
+                      David & Dorcas
+                    </p>
+                    <p className="text-sm text-gray-600 font-playfair">
+                      Walking in God's Grace
+                    </p>
+                  </div>
+                </div>
+                <div className="px-4 py-2 bg-primary/10 rounded-full">
+                  <p className="text-sm font-playfair text-primary">
+                    Jeremiah 29:11
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
