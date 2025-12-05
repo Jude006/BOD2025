@@ -6,7 +6,6 @@ import {
   FaMapMarkerAlt,
   FaClock,
   FaUserFriends,
-  FaGlassCheers,
   FaMusic,
   FaCar,
   FaQuestionCircle,
@@ -17,20 +16,12 @@ import { GiPartyPopper, GiPartyHat } from "react-icons/gi";
 
 const RSVP = () => {
   const [selectedAttendees, setSelectedAttendees] = useState([]);
-  const [selectedMeal, setSelectedMeal] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const attendees = [
     { id: 1, name: "I will attend", icon: <GiPartyPopper />, color: "from-green-500 to-emerald-600" },
     { id: 2, name: "I might attend", icon: <GiPartyHat />, color: "from-yellow-500 to-amber-600" },
     { id: 3, name: "Cannot attend", icon: <FaTimesCircle />, color: "from-red-500 to-pink-600" }
-  ];
-
-  const mealOptions = [
-    { id: 1, name: "Regular Menu", icon: "🍗", desc: "Chicken & Beef options" },
-    { id: 2, name: "Vegetarian", icon: "🥗", desc: "Plant-based options" },
-    { id: 3, name: "Seafood", icon: "🍤", desc: "Fish & seafood dishes" },
-    { id: 4, name: "Kids Menu", icon: "🍕", desc: "For our young guests" }
   ];
 
   const weddingDetails = [
@@ -87,7 +78,7 @@ const RSVP = () => {
     if (selectedAttendees.length > 0) {
       setShowConfirmation(true);
       // In a real app, this would send data to your backend
-      console.log("RSVP submitted:", { selectedAttendees, selectedMeal });
+      console.log("RSVP submitted:", { selectedAttendees });
     }
   };
 
@@ -190,34 +181,6 @@ const RSVP = () => {
                           </p>
                         </div>
                       </div>
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Meal Preference */}
-              <motion.div variants={fadeInUp} className="space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <FaGlassCheers className="text-xl text-secondary" />
-                  <h3 className="text-2xl font-playfair text-dark">
-                    Meal Preference
-                  </h3>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  {mealOptions.map((meal) => (
-                    <button
-                      key={meal.id}
-                      onClick={() => setSelectedMeal(meal.id)}
-                      className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-                        selectedMeal === meal.id
-                          ? "border-primary bg-primary/5 shadow-lg"
-                          : "border-gray-200 bg-white hover:border-primary/30"
-                      }`}
-                    >
-                      <div className="text-3xl mb-2">{meal.icon}</div>
-                      <h4 className="font-playfair text-sm font-semibold">{meal.name}</h4>
-                      <p className="text-xs text-gray-500 mt-1">{meal.desc}</p>
                     </button>
                   ))}
                 </div>
@@ -327,7 +290,7 @@ const RSVP = () => {
               <span className="font-playfair text-gray-700">Note from the Couple</span>
             </div>
             <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-700 font-playfair italic">
-              "Your presence is the only gift we need. We can't wait to share this special day with you!"
+              "Your presence is the most special gift we need. We can't wait to share this special day with you!"
             </p>
             <div className="flex items-center justify-center gap-4 mt-8">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
