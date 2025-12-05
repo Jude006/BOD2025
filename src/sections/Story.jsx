@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaHeart,
@@ -14,12 +14,12 @@ import { GiLoveLetter, GiAngelWings, GiHearts } from "react-icons/gi";
 import coupleImg1 from "../assets/image/img1.jpg";
 import coupleImg2 from "../assets/image/img2.jpg";
 import coupleImg3 from "../assets/image/img3.jpg";
-import { useSwipeable } from "react-swipeable";
 
 const Story = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
-  const [direction, setDirection] = useState(0); // 1 for next, -1 for prev
+  const [direction, setDirection] = useState(0);
+  const carouselRef = useRef(null);
 
   const storyTimeline = [
     {
@@ -72,30 +72,10 @@ const Story = () => {
     const interval = setInterval(() => {
       setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % storyTimeline.length);
-    }, 6000); // Change slide every 6 seconds
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [autoPlay, storyTimeline.length]);
-
-  // Swipe handlers
-  const handlers = useSwipeable({
-    onSwipedLeft: () => {
-      setDirection(1);
-      setCurrentSlide((prev) => (prev + 1) % storyTimeline.length);
-      setAutoPlay(false);
-      setTimeout(() => setAutoPlay(true), 15000); // Resume auto-play after 15s
-    },
-    onSwipedRight: () => {
-      setDirection(-1);
-      setCurrentSlide(
-        (prev) => (prev - 1 + storyTimeline.length) % storyTimeline.length
-      );
-      setAutoPlay(false);
-      setTimeout(() => setAutoPlay(true), 15000);
-    },
-    preventDefaultTouchmoveEvent: false,
-    trackMouse: false,
-  });
 
   const nextSlide = () => {
     setDirection(1);
@@ -112,6 +92,47 @@ const Story = () => {
     setAutoPlay(false);
     setTimeout(() => setAutoPlay(true), 15000);
   };
+
+  // FIX: Custom swipe handler without react-swipeable
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const handleTouchStart = (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    };
+
+    const handleTouchEnd = (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    };
+
+    const handleSwipe = () => {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe left
+          nextSlide();
+        } else {
+          // Swipe right
+          prevSlide();
+        }
+      }
+    };
+
+    carousel.addEventListener("touchstart", handleTouchStart);
+    carousel.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      carousel.removeEventListener("touchstart", handleTouchStart);
+      carousel.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -154,7 +175,7 @@ const Story = () => {
   };
 
   return (
-    <section id="story" className="py-20 bg-light">
+    <section id="story" className="py-20 bg-light overflow-hidden">
       <div className="container px-4 mx-auto md:px-8">
         {/* Section Header */}
         <motion.div
@@ -248,7 +269,7 @@ const Story = () => {
           </h3>
 
           {/* Mobile Carousel */}
-          <div className="md:hidden" {...handlers}>
+          <div className="md:hidden" ref={carouselRef}>
             <div className="relative max-w-lg mx-auto">
               <AnimatePresence mode="sync" custom={direction}>
                 <motion.div
@@ -258,7 +279,7 @@ const Story = () => {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  className="relative"
+                  className="relative touch-pan-y" // FIX: Add proper touch action
                 >
                   {/* Story Card */}
                   <div className="overflow-hidden bg-white border border-gray-100 shadow-2xl rounded-3xl">
@@ -374,7 +395,7 @@ const Story = () => {
                   </span>
                 </div>
                 <p className="mt-2 text-xs text-gray-500 font-playfair">
-                  Swipe or tap arrows to navigate
+                  Swipe on card or tap arrows to navigate
                 </p>
               </div>
             </div>
